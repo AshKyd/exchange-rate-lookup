@@ -1,3 +1,4 @@
+import { useEffect } from "preact/hooks";
 import { rates } from "../../signals";
 
 function getExchange(fromVal, toVal, amount, values) {
@@ -38,27 +39,33 @@ export default function Results() {
     amount,
     rates.value
   );
+
+  const fromAmountFormatted = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: fromVal,
+  })
+    .format(amount)
+    .replace(".00", "");
+
+  const toAmountFormatted = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: toVal,
+  }).format(amountInNewCurrency);
+
+  useEffect(() => {
+    document.title = `Exchange: ${fromAmountFormatted} is ${toAmountFormatted}`;
+  }, []);
   return (
     <article class="builder__centre-modal results">
       <div class="results__main">
         <div class="results__main-info">
-          <span class="amount results__numeric">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: fromVal,
-            })
-              .format(amount)
-              .replace(".00", "")}
-          </span>{" "}
+          <span class="amount results__numeric">{fromAmountFormatted}</span>{" "}
           <span class="fromVal">{fromVal}</span> <span class="in">in</span>{" "}
           <span class="toVal">{toVal}</span> <span class="is">is</span>
         </div>
 
         <div class="results__main-value results__numeric">
-          {new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: toVal,
-          }).format(amountInNewCurrency)}
+          {toAmountFormatted}
         </div>
       </div>
       <div class="results__supp">
