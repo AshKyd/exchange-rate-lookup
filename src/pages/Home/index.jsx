@@ -14,7 +14,7 @@ export function Home() {
 
   return (
     <form class="builder__centre-modal" onSubmit={onSubmit}>
-      <fieldset>
+      <fieldset class="builder__spacious">
         <legend>Convert currency</legend>
         <div class="currency__inline">
           <label>
@@ -43,7 +43,7 @@ export function Home() {
           />
         </label>
         <div class="builder__submit-row">
-          <button type="submit">Search</button>
+          <button type="submit">Convert</button>
         </div>
       </fieldset>
     </form>
